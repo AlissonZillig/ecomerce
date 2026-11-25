@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Encontre ofertas, cupons e produtos para o seu dia a dia.">
+  <title>Viva Loja — compras do seu jeito</title>
+  <style>
+    :root { --ink:#25233a; --muted:#77768a; --purple:#6546d7; --purple-dark:#5033bd; --pale:#f3f0ff; --line:#eceaf2; --green:#16845c; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:#fff; }
+    a { color:inherit; text-decoration:none; }
+
+    .topline { background:#26223d; color:#fff; text-align:center; padding:9px 16px; font-size:12px; letter-spacing:.02em; display:flex; justify-content:center; gap:20px; flex-wrap:wrap; }
+    .topline strong { color:#c9bbff; }
+    .status-badge { color:#6ee7b7; font-weight:700; }
+
+    header { border-bottom:1px solid var(--line); position:sticky; top:0; background:#fff; z-index:50; }
+    .header-main { max-width:1200px; margin:auto; padding:16px 24px; display:flex; align-items:center; gap:24px; }
+    .brand { display:flex; align-items:center; gap:9px; font-size:23px; font-weight:850; letter-spacing:-1px; white-space:nowrap; }
+    .brand-mark { width:34px; height:34px; border-radius:11px; background:var(--purple); color:#fff; display:grid; place-items:center; font-size:19px; }
+
+    .search { flex:1; display:flex; height:46px; border:2px solid #c5bce3; border-radius:12px; overflow:hidden; background:#faf9fc; transition:border-color .15s; }
+    .search:focus-within { border-color:var(--purple); background:#fff; }
+    .search input { flex:1; min-width:0; border:0; outline:0; background:transparent; padding:0 16px; font:inherit; font-size:14px; }
+    .search button { border:0; background:var(--purple); color:#fff; padding:0 20px; font-size:14px; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px; transition:background .15s; }
+    .search button:hover { background:var(--purple-dark); }
+
+    .header-actions { display:flex; align-items:center; gap:12px; font-size:13px; font-weight:650; white-space:nowrap; }
+    .action { display:flex; align-items:center; gap:7px; padding:9px 14px; border-radius:10px; border:1px solid var(--line); background:#faf9fc; cursor:pointer; transition:all .15s; }
+    .action:hover { background:var(--pale); border-color:#c9baff; color:var(--purple); }
+    .action-icon { font-size:18px; }
+    .cart-count { background:var(--purple); color:#fff; padding:2px 7px; border-radius:99px; font-size:11px; font-weight:800; }
+
+    nav { max-width:1200px; margin:auto; padding:10px 24px; display:flex; gap:10px; align-items:center; overflow-x:auto; white-space:nowrap; }
+    nav a { font-size:13px; font-weight:650; color:#4a485b; background:#f8f7fb; border:1px solid var(--line); padding:7px 14px; border-radius:20px; transition:all .15s; }
+    nav a:first-child, nav a:hover { color:var(--purple); background:var(--pale); border-color:#c9baff; }
+
+    .hero-wrap { background:linear-gradient(110deg,#f2edff,#e9e3ff 62%,#ded5ff); }
+    .hero { max-width:1200px; margin:auto; min-height:310px; padding:42px 24px; display:grid; grid-template-columns:1.1fr .9fr; align-items:center; gap:30px; }
+    .eyebrow { color:var(--purple); text-transform:uppercase; font-size:11px; font-weight:800; letter-spacing:.13em; }
+    h1 { margin:12px 0; max-width:540px; font-size:clamp(34px,5vw,52px); line-height:1.05; letter-spacing:-2px; }
+    .hero p { max-width:480px; color:#615d76; font-size:16px; line-height:1.65; margin:0 0 23px; }
+    .button { display:inline-flex; align-items:center; gap:10px; border-radius:10px; padding:13px 20px; background:var(--purple); color:white; font-size:14px; font-weight:750; box-shadow:0 4px 14px rgba(101,70,215,0.25); transition:background .15s; }
+    .button:hover { background:var(--purple-dark); }
+    .hero-art { min-height:220px; position:relative; display:grid; place-items:center; }
+    .hero-circle { position:absolute; width:245px; height:245px; border-radius:50%; background:#d5caff; }
+    .hero-bag { z-index:1; position:relative; font-size:125px; filter:drop-shadow(0 17px 16px #7460b83d); transform:rotate(-8deg); }
+    .float-card { z-index:2; position:absolute; background:#fff; padding:12px 15px; border-radius:12px; box-shadow:0 12px 30px #4c3d8120; font-size:12px; font-weight:750; }
+    .float-card span { display:block; color:var(--muted); font-size:10px; font-weight:500; margin-top:3px; }
+    .float-one { top:20px; right:4px; }.float-two { bottom:20px; left:6px; }
+
+    main { max-width:1200px; margin:auto; padding:38px 24px 60px; }
+    .section-heading { display:flex; justify-content:space-between; align-items:end; margin-bottom:19px; gap:20px; }
+    h2 { margin:0; font-size:23px; letter-spacing:-.7px; }
+    .section-heading p { color:var(--muted); font-size:13px; margin:5px 0 0; }
+    .see-all { color:var(--purple); font-size:13px; font-weight:700; white-space:nowrap; }
+
+    .categories { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-bottom:42px; }
+    .category { border:1px solid #dcd6ed; border-radius:14px; text-align:center; padding:18px 10px 15px; background:#fcfbfe; box-shadow:0 2px 5px rgba(0,0,0,0.02); transition:transform .15s, border-color .15s, box-shadow .15s; }
+    .category:hover { transform:translateY(-3px); border-color:var(--purple); box-shadow:0 6px 15px rgba(101,70,215,0.1); }
+    .category-icon { width:54px; height:54px; margin:0 auto 11px; border-radius:17px; display:grid; place-items:center; font-size:27px; background:var(--pale); }
+    .category b { display:block; font-size:12px; }
+
+    .products { display:grid; grid-template-columns:repeat(4,1fr); gap:17px; }
+    .product { border:1px solid #dcd6ed; border-radius:15px; padding:14px; position:relative; overflow:hidden; background:#fff; display:flex; flex-direction:column; justify-content:space-between; transition:transform .15s, box-shadow .15s; }
+    .product:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.06); border-color:#c9baff; }
+    .product-image { height:170px; border-radius:10px; display:grid; place-items:center; font-size:75px; background:linear-gradient(145deg,#f7f5fb,#eeebf6); }
+    .badge { position:absolute; top:21px; left:21px; border-radius:6px; background:#ffe8ed; color:#c13d5b; padding:5px 8px; font-size:10px; font-weight:800; }
+    .stock-tag { font-size:11px; color:var(--green); font-weight:700; margin-top:8px; }
+    .product-name { margin:6px 0; font-size:14px; font-weight:700; }
+    .rating { color:#ed9b25; font-size:11px; }.rating span { color:var(--muted); margin-left:4px; }
+    .price-block { margin-top:12px; }
+    .price { font-size:19px; font-weight:800; letter-spacing:-.5px; }
+    .old-price { color:#9996a5; font-size:11px; text-decoration:line-through; margin-left:5px; font-weight:400; }
+    .installment { color:var(--muted); font-size:11px; margin-top:3px; }
+
+    .buy-controls { display:flex; gap:8px; margin-top:14px; align-items:center; }
+    .qty-input { width:54px; height:36px; border:1px solid #c5bce3; border-radius:8px; text-align:center; font-weight:700; font-size:13px; }
+    .add { flex:1; height:36px; border:0; border-radius:8px; color:#fff; background:var(--purple); font-size:12px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:5px; transition:background .15s; }
+    .add:hover { background:var(--purple-dark); }
+
+    .toast { position:fixed; bottom:24px; right:24px; background:#26223d; color:#fff; padding:14px 20px; border-radius:12px; font-size:13px; font-weight:600; box-shadow:0 10px 25px rgba(0,0,0,0.2); display:none; align-items:center; gap:10px; z-index:100; border-left:4px solid #10b981; }
+
+    .benefits { display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-top:42px; }
+    .benefit { background:#f8f7fb; border-radius:13px; padding:17px; display:flex; gap:12px; align-items:center; border:1px solid var(--line); }
+    .benefit-icon { font-size:23px; }.benefit b { display:block; font-size:12px; }.benefit span { display:block; color:var(--muted); font-size:11px; margin-top:3px; }
+    footer { border-top:1px solid var(--line); text-align:center; color:var(--muted); padding:23px; font-size:11px; }
+
+    @media (max-width:760px) {
+      .header-main { flex-wrap:wrap; gap:14px; padding:15px 18px; }
+      .brand { flex:1; }
+      .action-label { display:none; }
+      .search { order:3; flex-basis:100%; }
+      .hero { grid-template-columns:1fr; text-align:center; }
+      .categories { grid-template-columns:repeat(3,1fr); }
+      .products { grid-template-columns:repeat(2,1fr); gap:11px; }
+      .benefits { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topline">
+    <span class="status-badge">🟢 Loja Online e Entregando</span>
+    <span>✨ Frete grátis na primeira compra <strong>acima de R$ 99</strong></span>
+  </div>
+
+  <header>
+    <div class="header-main">
+      <a class="brand" href="#inicio" aria-label="Viva Loja, início">
+        <span class="brand-mark">v</span> viva<span style="color:var(--purple)">loja</span>
+      </a>
+
+      <form class="search" role="search" onsubmit="realizarBusca(event)">
+        <input id="campoBusca" type="search" aria-label="Buscar produtos" placeholder="O que você procura hoje? (Ex: fone, tênis, cafeteira...)">
+        <button type="submit" aria-label="Buscar">⌕ Buscar</button>
+      </form>
+
+      <div class="header-actions">
+        <a class="action" href="#conta"><span class="action-icon">♙</span><span class="action-label">Minha conta</span></a>
+        <button class="action" type="button" onclick="verCarrinho()" aria-label="Ver carrinho de compras">
+          <span class="action-icon">🛒</span>
+          <span class="action-label">Carrinho</span>
+          <span class="cart-count" id="contadorCarrinho">0</span>
+        </button>
+      </div>
+    </div>
+
+    <nav aria-label="Menu principal">
+      <a href="#categorias">Categorias</a>
+      <a href="#ofertas">Ofertas</a>
+      <a href="#cupons">Cupons</a>
+      <a href="#supermercado">Supermercado</a>
+      <a href="#moda">Moda</a>
+      <a href="#vender">Vender</a>
+    </nav>
+  </header>
+
+  <section class="hero-wrap" id="inicio">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">A temporada de ofertas chegou</div>
+        <h1>Seu próximo achado está aqui.</h1>
+        <p>Produtos que você ama, preços que cabem no bolso e entrega direto na sua porta.</p>
+        <a class="button" href="#ofertas">Ver ofertas da semana <span>→</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-circle"></div>
+        <div class="hero-bag">🛍️</div>
+        <div class="float-card float-one">Até 40% OFF<span>em itens selecionados</span></div>
+        <div class="float-card float-two">★ 4,9 / 5<span>avaliação dos clientes</span></div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="categorias">
+      <div class="section-heading">
+        <div><h2>Explore por categoria</h2><p>Tem tudo o que você procura, em um só lugar.</p></div>
+        <a class="see-all" href="#categorias">Ver todas →</a>
+      </div>
+      <div class="categories">
+        <a class="category" href="#tecnologia"><div class="category-icon">🎧</div><b>Tecnologia</b></a>
+        <a class="category" href="#casa"><div class="category-icon">🪴</div><b>Casa & decoração</b></a>
+        <a class="category" href="#moda"><div class="category-icon">👟</div><b>Moda</b></a>
+        <a class="category" href="#beleza"><div class="category-icon">🧴</div><b>Beleza</b></a>
+        <a class="category" href="#supermercado"><div class="category-icon">🥑</div><b>Supermercado</b></a>
+        <a class="category" href="#esportes"><div class="category-icon">⚽</div><b>Esportes</b></a>
+      </div>
+    </section>
+
+    <section id="ofertas">
+      <div class="section-heading">
+        <div><h2>Ofertas para aproveitar</h2><p>Os queridinhos da semana com preços especiais.</p></div>
+        <a class="see-all" href="#ofertas">Ver mais ofertas →</a>
+      </div>
+
+      <div class="products">
+        <article class="product">
+          <div>
+            <span class="badge">-25% OFF</span>
+            <div class="product-image">🎧</div>
+            <div class="stock-tag">✓ Em estoque — Envio imediato</div>
+            <div class="product-name">Fone Bluetooth Wave Pro</div>
+            <div class="rating">★★★★★ <span>(128 avaliações)</span></div>
+          </div>
+          <div class="price-block">
+            <div class="price">R$ 149,90 <span class="old-price">R$ 199,90</span></div>
+            <div class="installment">ou 3x de R$ 49,97 sem juros</div>
+            <div class="buy-controls">
+              <input class="qty-input" type="number" min="1" max="10" value="1" id="qtd-1" aria-label="Quantidade">
+              <button class="add" type="button" onclick="adicionarCarrinho('Fone Bluetooth Wave Pro', 'qtd-1')">+ Adicionar</button>
+            </div>
+          </div>
+        </article>
+
+
+        <article class="product">
+          <div>
+            <span class="badge">-20% OFF</span>
+            <div class="product-image">⌚</div>
+            <div class="stock-tag">✓ Em estoque — Envio imediato</div>
+            <div class="product-name">Smartwatch Fit One</div>
+            <div class="rating">★★★★★ <span>(96 avaliações)</span></div>
+          </div>
+          <div class="price-block">
+            <div class="price">R$ 239,90 <span class="old-price">R$ 299,90</span></div>
+            <div class="installment">ou 5x de R$ 47,98 sem juros</div>
+            <div class="buy-controls">
+              <input class="qty-input" type="number" min="1" max="10" value="1" id="qtd-2" aria-label="Quantidade">
+              <button class="add" type="button" onclick="adicionarCarrinho('Smartwatch Fit One', 'qtd-2')">+ Adicionar</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="product">
+          <div>
+            <span class="badge">-30% OFF</span>
+            <div class="product-image">👟</div>
+            <div class="stock-tag">✓ Últimas unidades</div>
+            <div class="product-name">Tênis Urban Confort</div>
+            <div class="rating">★★★★☆ <span>(74 avaliações)</span></div>
+          </div>
+          <div class="price-block">
+            <div class="price">R$ 189,90 <span class="old-price">R$ 269,90</span></div>
+            <div class="installment">ou 4x de R$ 47,48 sem juros</div>
+            <div class="buy-controls">
+              <input class="qty-input" type="number" min="1" max="10" value="1" id="qtd-3" aria-label="Quantidade">
+              <button class="add" type="button" onclick="adicionarCarrinho('Tênis Urban Confort', 'qtd-3')">+ Adicionar</button>
+            </div>
+          </div>
+        </article>
+
+       
+        <article class="product">
+          <div>
+            <span class="badge">-15% OFF</span>
+            <div class="product-image">☕</div>
+            <div class="stock-tag">✓ Em estoque — Envio imediato</div>
+            <div class="product-name">Cafeteira Elétrica Aroma</div>
+            <div class="rating">★★★★★ <span>(213 avaliações)</span></div>
+          </div>
+          <div class="price-block">
+            <div class="price">R$ 169,90 <span class="old-price">R$ 199,90</span></div>
+            <div class="installment">ou 3x de R$ 56,63 sem juros</div>
+            <div class="buy-controls">
+              <input class="qty-input" type="number" min="1" max="10" value="1" id="qtd-4" aria-label="Quantidade">
+              <button class="add" type="button" onclick="adicionarCarrinho('Cafeteira Elétrica Aroma', 'qtd-4')">+ Adicionar</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="benefits" aria-label="Vantagens Viva Loja">
+      <div class="benefit"><div class="benefit-icon">🚚</div><div><b>Entrega rápida</b><span>Acompanhe seu pedido em tempo real</span></div></div>
+      <div class="benefit"><div class="benefit-icon">🔒</div><div><b>Compra protegida</b><span>Seus dados e pagamentos seguros</span></div></div>
+      <div class="benefit"><div class="benefit-icon">💬</div><div><b>Estamos por perto</b><span>Suporte humano para ajudar quando precisar</span></div></div>
+    </section>
+  </main>
+
+
+  <div class="toast" id="toastAviso" role="status" aria-live="polite"></div>
+
+  <footer>© 2026 Viva Loja · Feito para facilitar suas compras.</footer>
+
+  <script>
+    let totalItens = 0;
+
+
+    function adicionarCarrinho(nomeProduto, idInput) {
+      const inputQtd = document.getElementById(idInput);
+      const qtd = parseInt(inputQtd.value, 10);
+
+  
+      if (isNaN(qtd) || qtd < 1) {
+        mostrarToast('⚠️ Por favor, escolha pelo menos 1 unidade.');
+        inputQtd.value = 1;
+        return;
+      }
+
+      totalItens += qtd;
+      document.getElementById('contadorCarrinho').textContent = totalItens;
+      mostrarToast(`✅ ${qtd}x "${nomeProduto}" adicionado ao carrinho!`);
+    }
+
+
+    function realizarBusca(event) {
+      event.preventDefault();
+      const termo = document.getElementById('campoBusca').value.trim();
+      if (!termo) {
+        mostrarToast('⚠️ Digite o nome de um produto para buscar.');
+        document.getElementById('campoBusca').focus();
+        return;
+      }
+      mostrarToast(`🔍 Buscando ofertas para "${termo}"...`);
+    }
+
+    function verCarrinho() {
+      if (totalItens === 0) {
+        mostrarToast('🛒 Seu carrinho está vazio no momento.');
+      } else {
+        mostrarToast(`🛒 Você possui ${totalItens} item(ns) no seu carrinho.`);
+      }
+    }
+
+    function mostrarToast(mensagem) {
+      const toast = document.getElementById('toastAviso');
+      toast.textContent = mensagem;
+      toast.style.display = 'flex';
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3200);
+    }
+  </script>
+</body>
+</html>
